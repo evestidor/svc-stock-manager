@@ -1,0 +1,3 @@
+
+class PortfolioDoesNotExist(Exception):
+    pass

@@ -1,0 +1,3 @@
+
+class StockAlreadyExists(Exception):
+    pass
