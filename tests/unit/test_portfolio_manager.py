@@ -1,6 +1,6 @@
 import pytest
 
-from src.investors.portfolio import (
+from src.investors.portfolios import (
     MemoryPortfolioStorage,
     Portfolio,
     PortfolioManager,

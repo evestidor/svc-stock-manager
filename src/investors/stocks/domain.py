@@ -1,11 +1,11 @@
 from typing import Optional
 from dataclasses import dataclass
 
-from src.investors import portfolio
+from src.investors import portfolios
 
 
 @dataclass
-class Portfolio(portfolio.Portfolio):
+class Portfolio(portfolios.Portfolio):
     pass
 
 
