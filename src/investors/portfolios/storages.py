@@ -1,4 +1,7 @@
-from .domain import Portfolio
+from .domain import (
+    Account,
+    Portfolio,
+)
 from .exceptions import PortfolioDoesNotExist
 from .interfaces import PortfolioStorage
 
@@ -11,12 +14,12 @@ class MemoryPortfolioStorage(PortfolioStorage):
 
     def create(self, portfolio: Portfolio) -> Portfolio:
         portfolio.id = self._create_id(portfolio)
-        self._db[portfolio.user_id] = portfolio
+        self._db[portfolio.account.id] = portfolio
         return portfolio
 
-    def get_by_user_id(self, user_id: int) -> Portfolio:
+    def get_by_account(self, account: Account) -> Portfolio:
         try:
-            return self._db[user_id]
+            return self._db[account.id]
         except KeyError:
             raise self.DoesNotExist
 

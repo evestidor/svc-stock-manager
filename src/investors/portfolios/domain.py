@@ -3,6 +3,11 @@ from typing import Optional
 
 
 @dataclass
+class Account:
+    id: int
+
+
+@dataclass
 class Portfolio:
-    user_id: int
+    account: Account
     id: Optional[int] = None

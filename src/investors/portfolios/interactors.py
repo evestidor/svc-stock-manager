@@ -1,4 +1,7 @@
-from .domain import Portfolio
+from .domain import (
+    Account,
+    Portfolio,
+)
 from .exceptions import PortfolioDoesNotExist
 from .interfaces import PortfolioStorage
 
@@ -9,9 +12,9 @@ class PortfolioManager:
     def __init__(self, storage: PortfolioStorage):
         self._storage = storage
 
-    def create(self, user_id: int) -> Portfolio:
-        portfolio = Portfolio(user_id=user_id)
+    def create(self, account: Account) -> Portfolio:
+        portfolio = Portfolio(account=account)
         return self._storage.create(portfolio)
 
-    def get_by_user_id(self, user_id: int) -> Portfolio:
-        return self._storage.get_by_user_id(user_id)
+    def get_by_account(self, account: Account) -> Portfolio:
+        return self._storage.get_by_account(account)

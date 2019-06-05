@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
 
-from .domain import Portfolio
+from .domain import (
+    Account,
+    Portfolio,
+)
 
 
 class PortfolioStorage(ABC):
@@ -15,5 +18,5 @@ class PortfolioStorage(ABC):
         pass
 
     @abstractmethod
-    def get_by_user_id(self, user_id: int) -> Portfolio:
+    def get_by_account(self, account: Account) -> Portfolio:
         pass
