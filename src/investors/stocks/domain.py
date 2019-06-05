@@ -14,3 +14,8 @@ class Stock:
     portfolio: Portfolio
     symbol: str
     id: Optional[int] = None
+
+
+@dataclass
+class StockLot:
+    pass

@@ -4,6 +4,7 @@ from src.investors.stocks import (
     MemoryStockStorage,
     Portfolio,
     Stock,
+    StockLot,
     StockManager,
 )
 
@@ -16,6 +17,9 @@ class StockManagerMixin:
 
     def _create_stock(self, *args, **kwargs):
         return self.stock_manager.create(self.portfolio, *args, **kwargs)
+
+    def _make_investment(self, *args, **kwargs):
+        return self.stock_manager.make_investment(*args, **kwargs)
 
     def _list_stocks(self, *args, **kwargs):
         return self.stock_manager.list_by_portfolio(self.portfolio)
@@ -52,3 +56,11 @@ class TestListByPortfolio(StockManagerMixin):
         result = self._list_stocks()
         expected = [stock_1, stock_2, stock_3]
         assert expected == result
+
+
+class TestMakeInvestment(StockManagerMixin):
+
+    def test_returns_stock_lot_instance(self):
+        stock = self._create_stock(symbol='GOOG')
+        result = self._make_investment(stock)
+        assert isinstance(result, StockLot)

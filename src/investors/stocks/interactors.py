@@ -3,6 +3,7 @@ from typing import List
 from .domain import (
     Portfolio,
     Stock,
+    StockLot,
 )
 from .exceptions import StockAlreadyExists
 from .interfaces import StockStorage
@@ -24,3 +25,6 @@ class StockManager:
 
     def list_by_portfolio(self, portfolio: Portfolio) -> List[Portfolio]:
         return self._storage.list_by_portfolio(portfolio)
+
+    def make_investment(self, stock: Stock) -> StockLot:
+        return StockLot()
