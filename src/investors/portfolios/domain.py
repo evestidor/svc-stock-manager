@@ -3,11 +3,10 @@ from typing import Optional
 
 
 @dataclass
-class Account:
-    id: int
+class Portfolio:
+    id: Optional[int] = None
 
 
 @dataclass
-class Portfolio:
-    account: Account
-    id: Optional[int] = None
+class PortfolioMember:
+    id: int

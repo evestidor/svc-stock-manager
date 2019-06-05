@@ -1,27 +1,40 @@
+from typing import List
+from collections import defaultdict
+
 from .domain import (
-    Account,
     Portfolio,
+    PortfolioMember,
 )
 from .exceptions import PortfolioDoesNotExist
-from .interfaces import PortfolioStorage
+from .interfaces import (
+    PortfolioStorage,
+    PortfolioMembershipStorage,
+)
 
 
 class MemoryPortfolioStorage(PortfolioStorage):
     DoesNotExist = PortfolioDoesNotExist
 
     def __init__(self):
-        self._db = {}
+        self._db = []
 
     def create(self, portfolio: Portfolio) -> Portfolio:
-        portfolio.id = self._create_id(portfolio)
-        self._db[portfolio.account.id] = portfolio
+        portfolio = self._clone_portfolio(portfolio)
+        portfolio.id = id(portfolio)
+        self._db.append(portfolio)
         return portfolio
 
-    def get_by_account(self, account: Account) -> Portfolio:
-        try:
-            return self._db[account.id]
-        except KeyError:
-            raise self.DoesNotExist
+    def _clone_portfolio(self, portfolio: Portfolio):
+        return Portfolio(**portfolio.__dict__)
 
-    def _create_id(self, portfolio: Portfolio) -> int:
-        return id(portfolio)
+
+class MemoryPortfolioMembershipStorage(PortfolioMembershipStorage):
+
+    def __init__(self):
+        self._db = defaultdict(list)
+
+    def add_member(self, member: PortfolioMember, portfolio: Portfolio):
+        self._db[member.id].append(portfolio)
+
+    def list_portfolios(self, member: PortfolioMember) -> List[Portfolio]:
+        return self._db[member.id]

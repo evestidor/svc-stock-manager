@@ -31,7 +31,7 @@ class TestCreate(StockManagerMixin):
         result = self._create_stock(symbol='GOOG1')
         assert isinstance(result, Stock)
 
-    def test_creates_multiple_stocks(self):
+    def test_can_creates_multiple_stocks(self):
         self._create_stock(symbol='GOOG1')
         self._create_stock(symbol='GOOG2')
 

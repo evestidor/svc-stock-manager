@@ -1,18 +1,24 @@
 from .domain import (
-    Account,
     Portfolio,
+    PortfolioMember,
 )
-from .interactors import PortfolioManager
+from .interactors import (
+    PortfolioManager,
+    PortfolioMembershipManager,
+)
 from .interfaces import PortfolioStorage
 from .storages import (
     MemoryPortfolioStorage,
+    MemoryPortfolioMembershipStorage,
 )
 
 
 __all__ = [
-    'Account',
     'Portfolio',
     'PortfolioManager',
+    'PortfolioMembershipManager',
+    'PortfolioMember',
     'PortfolioStorage',
     'MemoryPortfolioStorage',
+    'MemoryPortfolioMembershipStorage',
 ]

@@ -1,22 +1,29 @@
 from abc import ABC, abstractmethod
+from typing import List
 
+from .exceptions import (
+    PortfolioDoesNotExist,
+)
 from .domain import (
-    Account,
     Portfolio,
+    PortfolioMember,
 )
 
 
 class PortfolioStorage(ABC):
 
-    @property
-    @abstractmethod
-    def DoesNotExist(self) -> Exception:
-        pass
-
     @abstractmethod
     def create(self, portfolio: Portfolio) -> Portfolio:
         pass
 
+
+class PortfolioMembershipStorage(ABC):
+    PortfolioDoesNotExist = PortfolioDoesNotExist
+
     @abstractmethod
-    def get_by_account(self, account: Account) -> Portfolio:
+    def add_member(self, member: PortfolioMember, portfolio: Portfolio):
+        pass
+
+    @abstractmethod
+    def list_portfolios(self, member: PortfolioMember) -> List[Portfolio]:
         pass
