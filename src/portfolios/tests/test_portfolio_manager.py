@@ -1,4 +1,4 @@
-from src.investors.portfolios import (
+from src.portfolios import (
     MemoryPortfolioStorage,
     Portfolio,
     PortfolioManager,

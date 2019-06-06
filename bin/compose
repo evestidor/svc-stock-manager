@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Identify the base Compose file (compose/*.yml)
+if [ -f "config/compose/$1.yml" ]; then
+  files+=( "-f config/compose/$1.yml" )
+  shift  # Remove $1
+else
+  available="$(cd config/compose && ls -m *.yml | sed -E 's/\.yml[[:>:]]//g')"
+  echo "Missing environment predicate (options: $available)"
+  exit 126
+fi
+
+# Compile the final command
+dirname=${PWD##*/}
+cmd="docker-compose -p $dirname ${files[@]} $@"
+
+# Finally run it
+echo -e "\033[34m+ $cmd\033[0m\n---\n"
+sh -c "$cmd"

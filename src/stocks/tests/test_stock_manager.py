@@ -1,6 +1,6 @@
 import pytest
 
-from src.investors.stocks import (
+from src.stocks import (
     MemoryStockStorage,
     Portfolio,
     Stock,
