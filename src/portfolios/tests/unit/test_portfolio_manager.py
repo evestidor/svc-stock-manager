@@ -1,17 +1,17 @@
 from src.portfolios import (
-    MemoryPortfolioStorage,
     Portfolio,
     PortfolioManager,
 )
+from src.portfolios.storages.memory import MemoryStorage
 
 
 class BaseTestHelper:
 
     def setup_method(self, method):
-        self.portfolio_manager = PortfolioManager(MemoryPortfolioStorage())
+        self.portfolio_manager = PortfolioManager(MemoryStorage())
 
     def _create_portfolio(self, *args, **kwargs):
-        return self.portfolio_manager.create(*args, **kwargs)
+        return self.portfolio_manager.create_portfolio(1, *args, **kwargs)
 
 
 class TestCreate(BaseTestHelper):

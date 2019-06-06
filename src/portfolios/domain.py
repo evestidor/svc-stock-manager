@@ -4,9 +4,5 @@ from typing import Optional
 
 @dataclass
 class Portfolio:
+    account_id: int
     id: Optional[int] = None
-
-
-@dataclass
-class PortfolioMember:
-    id: int
