@@ -7,7 +7,7 @@ class MemoryStorage(PortfolioStorage):
     def __init__(self):
         self._db = {}
 
-    def create_portfolio(self, portfolio: Portfolio) -> Portfolio:
+    def create(self, portfolio: Portfolio) -> Portfolio:
         portfolio = self._clone_portfolio(portfolio)
         portfolio.id = id(portfolio)
         self._db[portfolio.account_id] = portfolio

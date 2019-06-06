@@ -8,7 +8,7 @@ class PortfolioStorage(ABC):
     DoesNotExist = PortfolioDoesNotExist
 
     @abstractmethod
-    def create_portfolio(self, portfolio: Portfolio) -> Portfolio:
+    def create(self, portfolio: Portfolio) -> Portfolio:
         pass
 
     @abstractmethod
