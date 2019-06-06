@@ -1,0 +1,1 @@
+docker build -t evestidor/svc-stocks:local .
