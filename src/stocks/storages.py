@@ -6,7 +6,7 @@ from .domain import (
     Portfolio,
 )
 from .exceptions import StockAlreadyExists
-from .interfaces import StockStorage
+from .abstract import StockStorage
 
 
 class MemoryStockStorage(StockStorage):

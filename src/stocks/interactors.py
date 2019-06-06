@@ -6,7 +6,7 @@ from .domain import (
     StockLot,
 )
 from .exceptions import StockAlreadyExists
-from .interfaces import StockStorage
+from .abstract import StockStorage
 
 
 class StockManager:

@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from .domain import (
+from ..domain import (
     Stock,
     Portfolio,
 )
-from .exceptions import StockAlreadyExists
+from ..exceptions import StockAlreadyExists
 
 
 class StockStorage(ABC):
