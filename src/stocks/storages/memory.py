@@ -1,15 +1,15 @@
 from typing import List
 from collections import defaultdict
 
-from .domain import (
+from ..domain import (
     Stock,
     Portfolio,
 )
-from .exceptions import StockAlreadyExists
-from .abstract import StockStorage
+from ..exceptions import StockAlreadyExists
+from ..abstract import StockStorage
 
 
-class MemoryStockStorage(StockStorage):
+class MemoryStorage(StockStorage):
     AlreadyExists = StockAlreadyExists
 
     def __init__(self):

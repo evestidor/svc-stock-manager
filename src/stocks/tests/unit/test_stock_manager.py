@@ -1,19 +1,19 @@
 import pytest
 
 from src.stocks import (
-    MemoryStockStorage,
     Portfolio,
     Stock,
     StockLot,
     StockManager,
 )
+from src.stocks.storages.memory import MemoryStorage
 
 
 class StockManagerMixin:
 
     def setup_method(self, method):
         self.portfolio = Portfolio(id=1)
-        self.stock_manager = StockManager(MemoryStockStorage())
+        self.stock_manager = StockManager(MemoryStorage())
 
     def _create_stock(self, *args, **kwargs):
         return self.stock_manager.create(self.portfolio, *args, **kwargs)
