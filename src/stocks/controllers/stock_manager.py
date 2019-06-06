@@ -1,12 +1,12 @@
 from typing import List
 
-from .domain import (
+from ..domain import (
     Portfolio,
     Stock,
     StockLot,
 )
-from .exceptions import StockAlreadyExists
-from .abstract import StockStorage
+from ..exceptions import StockAlreadyExists
+from ..abstract import StockStorage
 
 
 class StockManager:

@@ -3,7 +3,7 @@ from .domain import (
     StockLot,
     Portfolio,
 )
-from .interactors import StockManager
+from .controllers import StockManager
 
 
 __all__ = [
