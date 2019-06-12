@@ -11,6 +11,9 @@ from .operations import (
 from .exceptions import (
     StockAlreadyExists,
 )
+from .storages.abstract import (
+    StockStorage,
+)
 
 
 __all__ = [
@@ -21,4 +24,5 @@ __all__ = [
     'Stock',
     'StockAlreadyExists',
     'StockLot',
+    'StockStorage',
 ]

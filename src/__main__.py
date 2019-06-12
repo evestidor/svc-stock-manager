@@ -1,3 +1,3 @@
-from web.application import main
+from api.application import main
 
 main()
