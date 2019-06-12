@@ -1,10 +1,10 @@
 import pytest
 
-from src.stock_manager import (
+from src.operations import (
     AddStockOperation,
     ListStocksOperation,
 )
-from src.stock_manager.storages.memory import StockMemoryStorage
+from src.storages.memory import StockMemoryStorage
 
 
 @pytest.fixture

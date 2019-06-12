@@ -1,9 +1,7 @@
 import pytest
 
-from src.stock_manager import (
-    Stock,
-    StockAlreadyExists,
-)
+from src.domain import Stock
+from src.exceptions import StockAlreadyExists
 
 
 class TestCreate:

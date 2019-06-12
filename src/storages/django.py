@@ -1,18 +1,14 @@
 from typing import List
 
-from stock_manager import (
-    Stock,
-    StockAlreadyExists,
-    StockStorage,
-)
-
-from .models import Stock as StockDB
+from src.domain import Stock
+from src.exceptions import StockAlreadyExists
+from src.interfaces import StockStorage
 
 
 class StockDjangoStorage(StockStorage):
     AlreadyExists = StockAlreadyExists
 
-    def __init__(self, model: StockDB = StockDB):
+    def __init__(self, model):
         self.model = model
 
     def add(self, stock: Stock) -> Stock:
@@ -25,5 +21,5 @@ class StockDjangoStorage(StockStorage):
         stocks = self._queryset_to_domain(instances)
         return stocks
 
-    def _queryset_to_domain(self, instances: List[StockDB]) -> List[Stock]:
+    def _queryset_to_domain(self, instances) -> List[Stock]:
         return [Stock(**instance.__dict__) for instance in instances]

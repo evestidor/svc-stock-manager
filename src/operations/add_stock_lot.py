@@ -1,14 +1,15 @@
 import datetime
 
-from .abstract import AbstractOperation
+from src import interfaces
+from src.domain import (
+    Stock,
+    StockLot,
+)
 
-from ..domain import Stock, StockLot
-from ..storages.abstract import LotStorage
 
+class AddStockLotOperation(interfaces.Operation):
 
-class AddStockLotOperation(AbstractOperation):
-
-    def __init__(self, storage: LotStorage):
+    def __init__(self, storage: interfaces.LotStorage):
         self._storage = storage
 
     def execute(

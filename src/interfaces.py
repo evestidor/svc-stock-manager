@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from ..domain import Stock, StockLot
-from ..exceptions import StockAlreadyExists
+from .domain import Stock, StockLot
+from .exceptions import StockAlreadyExists
 
 
 class StockStorage(ABC):
@@ -25,4 +25,11 @@ class LotStorage(ABC):
 
     @abstractmethod
     def list(self, stock: Stock) -> List[StockLot]:
+        pass
+
+
+class Operation(ABC):
+
+    @abstractmethod
+    def execute(self, *args, **kwargs):
         pass

@@ -1,9 +1,8 @@
 from typing import List
 
-from ..domain import Stock
-from ..exceptions import StockAlreadyExists
-
-from .abstract import StockStorage
+from src.domain import Stock
+from src.exceptions import StockAlreadyExists
+from src.interfaces import StockStorage
 
 
 class StockMemoryStorage(StockStorage):
