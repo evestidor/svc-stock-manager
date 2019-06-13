@@ -1,18 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: svc-stocks
+  name: svc-stock-manager
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: svc-stocks
-
+      app: svc-stock-manager
+  replicas: 1
   template:
     metadata:
       labels:
-        app: svc-stocks
+        app: svc-stock-manager
     spec:
       containers:
-        - name: svc-stocks
-          image: evestidor/svc-stocks
+        - name: svc-stock-manager
+          image: evestidor/svc-stock-manager:master
