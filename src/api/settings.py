@@ -2,7 +2,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-ROOT_FOLDER_NAME = 'api'
+ROOT_FOLDER_NAME = 'src.api'
 
 # TODO: Replace secret key with environment variable
 SECRET_KEY = '4v+9p2pu&np$&f!=@wk^3z4t$(k@@lpcf@u*7u2osb4rl%8x4-'
@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api',
+    'src.api',
 ]
 
 MIDDLEWARE = [
