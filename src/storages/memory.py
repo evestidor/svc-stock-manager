@@ -1,12 +1,16 @@
 from typing import List
 
 from src.domain import Stock
-from src.exceptions import StockAlreadyExists
+from src.exceptions import (
+    StockAlreadyExists,
+    StockDoesNotExist,
+)
 from src.interfaces import StockStorage
 
 
 class StockMemoryStorage(StockStorage):
     AlreadyExists = StockAlreadyExists
+    DoesNotExist = StockDoesNotExist
 
     def __init__(self):
         self._db = {}
@@ -22,6 +26,13 @@ class StockMemoryStorage(StockStorage):
 
     def list(self) -> List[Stock]:
         return list(self._db.values())
+
+    def update_price(self, stock: Stock) -> Stock:
+        try:
+            self._db[stock.symbol].price = stock.price
+        except KeyError as e:
+            raise self.DoesNotExist from e
+        return self._db[stock.symbol]
 
     def _clone_stock(self, stock: Stock) -> Stock:
         return Stock(**stock.__dict__)

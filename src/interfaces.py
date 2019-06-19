@@ -16,6 +16,10 @@ class StockStorage(ABC):
     def list(self) -> List[Stock]:
         pass
 
+    @abstractmethod
+    def update_price(self, stock: Stock) -> Stock:
+        pass
+
 
 class LotStorage(ABC):
 
@@ -32,4 +36,11 @@ class Operation(ABC):
 
     @abstractmethod
     def execute(self, *args, **kwargs):
+        pass
+
+
+class StockReader(ABC):
+
+    @abstractmethod
+    def read_stocks(self) -> List[Stock]:
         pass

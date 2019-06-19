@@ -1,0 +1,35 @@
+import json
+
+from django.core.management.base import BaseCommand
+from evestidor_event_stream import EventStream
+
+from src.operations import UpdateStockPriceOperation
+from src.storages.django import StockDjangoStorage
+from src.api.models import Stock as StockModel
+
+
+class Command(BaseCommand):
+    help = 'Consume new prices from event stream'
+
+    def handle(self, *args, **options):
+        handler = EventStream(host='evestidor-event-stream')
+        handler.read(
+            exchange_name='stock_prices',
+            routing_key='stock.prices.update',
+            callback=self._handle_new_price,
+        )
+
+    def _handle_new_price(self, channel, method, properties, data):
+        data = self._parse_data(data)
+        self._execute_operation(data)
+        self.stdout.write(self.style.SUCCESS(f'Stored {data}'))
+
+    def _parse_data(self, data: str) -> dict:
+        return json.loads(data)
+
+    def _execute_operation(self, data: dict):
+        storage = StockDjangoStorage(StockModel)
+        UpdateStockPriceOperation(storage).execute(
+            symbol=data['symbol'],
+            price=data['price'],
+        )

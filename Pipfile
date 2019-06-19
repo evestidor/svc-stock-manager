@@ -7,6 +7,7 @@ name = "pypi"
 ipython = "*"
 django = "*"
 djangorestframework = "*"
+evestidor-event-stream = {git = "https://github.com/evestidor/core-event-stream.git"}
 
 [dev-packages]
 pytest = "*"
@@ -14,4 +15,4 @@ pytest-spec = "*"
 pytest-cov = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"
