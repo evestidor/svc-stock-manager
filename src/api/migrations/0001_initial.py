@@ -14,10 +14,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Stock',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(
+                    auto_created=True,
+                    primary_key=True,
+                    serialize=False,
+                    verbose_name='ID',
+                )),
                 ('symbol', models.CharField(max_length=255, unique=True)),
                 ('name', models.CharField(max_length=255)),
-                ('price', models.DecimalField(blank=True, decimal_places=2, max_digits=24, null=True)),
+                ('price', models.DecimalField(
+                    blank=True,
+                    decimal_places=2,
+                    max_digits=24,
+                    null=True,
+                )),
             ],
         ),
     ]
