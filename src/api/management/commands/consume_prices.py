@@ -3,9 +3,10 @@ import json
 from django.core.management.base import BaseCommand
 from evestidor_event_stream import EventStream
 
+from src.api.models import Stock as StockModel
 from src.operations import UpdateStockPriceOperation
 from src.storages.django import StockDjangoStorage
-from src.api.models import Stock as StockModel
+from src.exceptions import StockDoesNotExist
 
 
 class Command(BaseCommand):
@@ -21,8 +22,11 @@ class Command(BaseCommand):
 
     def _handle_new_price(self, channel, method, properties, data):
         data = self._parse_data(data)
-        self._execute_operation(data)
-        self.stdout.write(self.style.SUCCESS(f'Stored {data}'))
+        try:
+            self._execute_operation(data)
+            self.stdout.write(self.style.SUCCESS(f'Updated {data}'))
+        except StockDoesNotExist:
+            self.stdout.write(self.style.WARNING(f'Ignored {data}'))
 
     def _parse_data(self, data: str) -> dict:
         return json.loads(data)
