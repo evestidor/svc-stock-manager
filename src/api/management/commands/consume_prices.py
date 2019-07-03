@@ -1,6 +1,7 @@
 import json
 
 from django.core.management.base import BaseCommand
+from django.db.utils import OperationalError
 from evestidor_event_stream import EventStream
 
 from src.api.models import Stock as StockModel
@@ -27,6 +28,10 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(f'Updated {data}'))
         except StockDoesNotExist:
             self.stdout.write(self.style.WARNING(f'Ignored {data}'))
+        except OperationalError:
+            self.stdout.write(self.style.WARNING(
+                f'Database is down or not migrated'
+            ))
 
     def _parse_data(self, data: str) -> dict:
         return json.loads(data)

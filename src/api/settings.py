@@ -1,39 +1,74 @@
 import os
+import environ
+import sentry_sdk
+from sentry_sdk.integrations import django
+
+
+env = environ.Env(
+    DEBUG=(bool, False),
+    ALLOWED_HOSTS=(list, []),
+)
+
+ENVIRONMENT = env('ENVIRONMENT', default='localhost')
+
+# PATHS ----------------------------------------------------------------------
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-ROOT_FOLDER_NAME = 'src.api'
+ROOT_DIR_NAME = 'src'
 
-# TODO: Replace secret key with environment variable
-SECRET_KEY = '4v+9p2pu&np$&f!=@wk^3z4t$(k@@lpcf@u*7u2osb4rl%8x4-'
+PROJECT_DIR = os.path.join(BASE_DIR, ROOT_DIR_NAME)
 
-# TODO: Replace with environment variable
-DEBUG = True
 
-# TODO: Replace with environment variable
-ALLOWED_HOSTS = ['*']
+# DJANGO SECURITY ------------------------------------------------------------
 
-INSTALLED_APPS = [
+SECRET_KEY = env('SECRET_KEY')
+
+DEBUG = env('DEBUG', default=False)
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+
+
+# DJANGO APPLICATION ---------------------------------------------------------
+
+ROOT_URLCONF = '{}.urls'.format(ROOT_DIR_NAME)
+
+WSGI_APPLICATION = '{}.wsgi.application'.format(ROOT_DIR_NAME)
+
+APPEND_SLASH = True
+
+
+# DJANGO APPS ----------------------------------------------------------------
+
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+THIRD_PARTY_APPS = [
+    'rest_framework',
+]
+
+LOCAL_APPS = [
     'src.api',
 ]
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-ROOT_URLCONF = '{}.urls'.format(ROOT_FOLDER_NAME)
+
+# DATABASE -------------------------------------------------------------------
+
+DATABASES = {
+    # reads os.environ['DATABASE_URL']
+    'default': env.db(default='sqlite:///local.db'),
+}
+
+
+# TEMPLATES ------------------------------------------------------------------
 
 TEMPLATES = [
     {
@@ -51,30 +86,25 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = '{}.wsgi.application'.format(ROOT_FOLDER_NAME)
 
-# TODO: Replace with environment variable
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, '../db.sqlite3'),
-    }
-}
+# STATIC ---------------------------------------------------------------------
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # noqa
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # noqa
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # noqa
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # noqa
-    },
+STATIC_URL = '/static/'
+
+
+# MIDDLEWARES ----------------------------------------------------------------
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# I18N & L10N -----------------------------------------------------------------
 
 LANGUAGE_CODE = 'en-us'
 
@@ -86,4 +116,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
+
+# ERROR REPORTING -------------------------------------------------------------
+
+SENTRY_DSN = env('SENTRY_DSN', default=None)
+
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[django.DjangoIntegration()],
+        environment=ENVIRONMENT,
+    )
