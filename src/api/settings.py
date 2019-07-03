@@ -15,7 +15,7 @@ ENVIRONMENT = env('ENVIRONMENT', default='localhost')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-ROOT_DIR_NAME = 'src'
+ROOT_DIR_NAME = 'src.api'
 
 PROJECT_DIR = os.path.join(BASE_DIR, ROOT_DIR_NAME)
 
